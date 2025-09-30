@@ -1,0 +1,44 @@
+body {
+    font-family: monospace;
+    margin: 0;
+    padding: 0;
+    background-color: #111;
+    color: #eee;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.topbar {
+    background-color: #222;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.editor {
+    display: flex;
+    flex: 1;
+}
+
+#code {
+    width: 50%;
+    background: #1e1e1e;
+    color : #fff;
+    padding: 10px;
+    resize : none;
+    outline : none;
+    font-size : 14px;
+}
+
+#output {
+    width: 50%;
+    background: #000;
+    color : #0f0;
+    padding: 10px;
+    overflow-y: auto;
+    overflow-y: auto;
+}
