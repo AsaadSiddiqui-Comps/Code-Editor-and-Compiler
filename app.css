@@ -424,3 +424,9 @@ body{
 ::-webkit-scrollbar{width:10px;height:8px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:linear-gradient(180deg, rgba(79,70,229,0.14), rgba(79,70,229,0.06));border-radius:10px}
+.exec-time {
+  margin-top: 8px;
+  color: #acacac;
+  font-size: 0.9em;
+}
+
