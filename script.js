@@ -1,15 +1,14 @@
-// script.js
 const runBtn = document.getElementById("runBtn");
 const codeInput = document.getElementById("code");
 const outputDiv = document.getElementById("output");
 const languageSelect = document.getElementById("language");
 
 const defaultCode = {
-  javascript: `console.log("Hello, JavaScript!");`,
-  python: `print("Hello, Python!")`,
+  javascript: `console.log("Hello, In this You Can Run JavaScript Program");`,
+  python: `print("Hello, In this You Can Run Python Program")`,
   java: `class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, Java!");
+        System.out.println("Hello, In this You Can Run Java! Program");
     }
 }`
 };
@@ -20,7 +19,6 @@ const lineNumbersEl = document.getElementById('lineNumbers');
 
 function renderLineNumbers() {
   const textLines = codeInput.value.split('\n').length;
-  // compute visible lines based on textarea height and line-height
   let lineHeight = parseFloat(window.getComputedStyle(codeInput).lineHeight);
   if (!lineHeight || isNaN(lineHeight)) lineHeight = 20; // fallback
   const visibleLines = Math.max( Math.floor(codeInput.clientHeight / lineHeight), 1 );
@@ -62,7 +60,7 @@ runBtn.addEventListener("click", async () => {
   // Prepare body for Piston API
   const body = {
     language: lang,
-    version: "*", // use latest version
+    version: "*",
     files: [
       {
         name: "main." + (lang === "python" ? "py" : lang === "java" ? "java" : "js"),
@@ -81,13 +79,13 @@ runBtn.addEventListener("click", async () => {
     const data = await res.json();
 
 if (data.run.output !== undefined) {
-  // preserve newlines
+  
   const programOutput = data.run.output.trim();
 
-  // fallback for missing time
+ 
   const execTime = (data.run.time !== undefined ? data.run.time : 0);
 
-  // show output normally, then time on the same last line
+  
   outputDiv.innerText = programOutput + "\n(Time: " + execTime + "s)";
 } else {
   outputDiv.innerText = "Error: " + JSON.stringify(data);
