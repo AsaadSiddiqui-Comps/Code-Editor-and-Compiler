@@ -4,11 +4,11 @@ const outputDiv = document.getElementById("output");
 const languageSelect = document.getElementById("language");
 
 const defaultCode = {
-  javascript: `console.log("Hello, In this You Can Run JavaScript Program");`,
-  python: `print("Hello, In this You Can Run Python Program")`,
+  javascript: `console.log("Hello, JavaScript!");`,
+  python: `print("Hello, Python!")`,
   java: `class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, In this You Can Run Java! Program");
+        System.out.println("Hello, Java!");
     }
 }`
 };
@@ -70,7 +70,7 @@ runBtn.addEventListener("click", async () => {
   };
 
   try {
-    outputDiv.textContent = "Running...";
+    outputDiv.innerHTML = `<span class="placeholder">Running...</span>`;
     const res = await fetch("https://emkc.org/api/v2/piston/execute", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -78,20 +78,21 @@ runBtn.addEventListener("click", async () => {
     });
     const data = await res.json();
 
-if (data.run.output !== undefined) {
-  
-  const programOutput = data.run.output.trim();
+    if (data.run && data.run.output !== undefined) {
+      const programOutput = data.run.output.trim();
+      
+      // Convert time to seconds (assuming ms)
+      const execTime = data.run.time !== undefined ? (data.run.time / 1000).toFixed(2) : "0.00";
 
- 
-  const execTime = (data.run.time !== undefined ? data.run.time : 0);
-
-  
-  outputDiv.innerText = programOutput + "\n(Time: " + execTime + "s)";
-} else {
-  outputDiv.innerText = "Error: " + JSON.stringify(data);
-}
+      // Format output as code block inside panel
+      outputDiv.innerHTML = `
+        <pre class="program-output">${programOutput}</pre>
+        <div class="exec-time">(Time: ${execTime}s)</div>
+      `;
+    } else {
+      outputDiv.innerHTML = `<span class="error">Error: ${JSON.stringify(data)}</span>`;
+    }
   } catch (err) {
-    outputDiv.textContent = "Error: " + err.message;
+    outputDiv.innerHTML = `<span class="error">Error: ${err.message}</span>`;
   }
 });
-
