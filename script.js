@@ -15,9 +15,44 @@ const defaultCode = {
 };
 
 
+// Line numbers element and helper
+const lineNumbersEl = document.getElementById('lineNumbers');
+
+function renderLineNumbers() {
+  const textLines = codeInput.value.split('\n').length;
+  // compute visible lines based on textarea height and line-height
+  let lineHeight = parseFloat(window.getComputedStyle(codeInput).lineHeight);
+  if (!lineHeight || isNaN(lineHeight)) lineHeight = 20; // fallback
+  const visibleLines = Math.max( Math.floor(codeInput.clientHeight / lineHeight), 1 );
+  const minLines = 20; // ensure a minimum gutter for empty editors
+  const count = Math.max(textLines, visibleLines, minLines);
+  let html = '';
+  for (let i = 1; i <= count; i++) {
+    html += i + '\n';
+  }
+  // Keep newline chars but display as text
+  lineNumbersEl.textContent = html;
+}
+
+// Sync scroll of line numbers with textarea
+codeInput.addEventListener('scroll', () => {
+  lineNumbersEl.scrollTop = codeInput.scrollTop;
+});
+
+// Update line numbers on input
+codeInput.addEventListener('input', renderLineNumbers);
+
+// Initial render
+renderLineNumbers();
+
+// Re-render line numbers on window resize to account for visible rows
+window.addEventListener('resize', renderLineNumbers);
+
+
 languageSelect.addEventListener("change", () => {
     const lang = languageSelect.value;
     codeInput.value = defaultCode[lang];
+  renderLineNumbers();
 });
 
 runBtn.addEventListener("click", async () => {
@@ -45,10 +80,17 @@ runBtn.addEventListener("click", async () => {
     });
     const data = await res.json();
 
-    if (data.run.output) {
-  outputDiv.textContent = data.run.output + "\n\n(Time: " + data.run.time + "s)";
+if (data.run.output !== undefined) {
+  // preserve newlines
+  const programOutput = data.run.output.trim();
+
+  // fallback for missing time
+  const execTime = (data.run.time !== undefined ? data.run.time : 0);
+
+  // show output normally, then time on the same last line
+  outputDiv.innerText = programOutput + "\n(Time: " + execTime + "s)";
 } else {
-  outputDiv.textContent = "Error: " + JSON.stringify(data);
+  outputDiv.innerText = "Error: " + JSON.stringify(data);
 }
   } catch (err) {
     outputDiv.textContent = "Error: " + err.message;
