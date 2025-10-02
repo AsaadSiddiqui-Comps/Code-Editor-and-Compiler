@@ -62,7 +62,7 @@ body{
 .header-buttons{display:flex;gap:8px;align-items:center}
 .header-buttons .btn{padding:10px 14px;font-size:15px}
 
-/* Buttons (modern) */
+/* Buttons */
 .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:calc(var(--radius-sm) + 2px);font-weight:700;border:0;background:transparent;color:var(--text);cursor:pointer;transition:all var(--transition)}
 
 .btn:focus{outline:2px solid rgba(124,58,237,0.18);outline-offset:2px}
