@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Code Editor</title>
+  <title>Code Editor & Compiler Online</title>
+
   <link rel="stylesheet" href="app.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -21,9 +22,9 @@
                     <p class="logo-subtitle">Interactive Code Editor</p>
                 </div>
             </div>
-            
+            <!--  -->
             <div class="header-buttons">
-                <button class="btn btn-ghost">
+               <button class="btn btn-ghost" onclick="window.open('https://github.com/AsaadSiddiqui-Comps/Code-Editor-and-Compiler', '_blank')">
                     <i class="fab fa-github"></i>
                     <span class="btn-text">Star on GitHub</span>
                 </button>
@@ -93,9 +94,12 @@
           </div>
         </div>
       </div>
+      
+
+      
       <div class="code-wrap">
         <div class="line-numbers" id="lineNumbers" aria-hidden="true"></div>
-        <textarea id="code" spellcheck="false">console.log("Hello, JavaScript!");
+        <textarea class="language-css" id="code" spellcheck="false">console.log("Hello, JavaScript!");
         </textarea>
       </div>
     </div>
@@ -143,4 +147,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
