@@ -63,36 +63,44 @@ runBtn.addEventListener("click", async () => {
     version: "*",
     files: [
       {
-        name: "main." + (lang === "python" ? "py" : lang === "java" ? "java" : "js"),
-        content: code
-      }
-    ]
+        name:
+          "main." +
+          (lang === "python" ? "py" : lang === "java" ? "java" : "js"),
+        content: code,
+      },
+    ],
   };
 
   try {
     outputDiv.innerHTML = `<span class="placeholder">Running...</span>`;
+    const startTime = performance.now(); // start timer
+
     const res = await fetch("https://emkc.org/api/v2/piston/execute", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     });
+
+    const endTime = performance.now(); // end timer
+    const execTime = ((endTime - startTime) / 1000).toFixed(2); // seconds
+
     const data = await res.json();
 
     if (data.run && data.run.output !== undefined) {
       const programOutput = data.run.output.trim();
-      
-      // Convert time to seconds (assuming ms)
-      const execTime = data.run.time !== undefined ? (data.run.time / 1000).toFixed(2) : "0.00";
 
-      // Format output as code block inside panel
       outputDiv.innerHTML = `
         <pre class="program-output">${programOutput}</pre>
-        <div class="exec-time">(Time: ${execTime}s)</div>
+        <div class="execution-time">(Execution Time: ${execTime}s)</div>
       `;
     } else {
-      outputDiv.innerHTML = `<span class="error">Error: ${JSON.stringify(data)}</span>`;
+      outputDiv.innerHTML = `<span class="error">Error: ${JSON.stringify(
+        data
+      )}</span>`;
     }
   } catch (err) {
     outputDiv.innerHTML = `<span class="error">Error: ${err.message}</span>`;
   }
 });
+
+Accha ye code run button se end Tak laga dena exec time dekha raha hai ye lagane ke baad
