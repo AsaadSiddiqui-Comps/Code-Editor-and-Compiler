@@ -75,8 +75,8 @@ CodeRunner/
 ## 👨‍👩‍👦 Team Members
 
 * **Asaad Siddiqui**
-* **[Member 2 Name]**
-* **[Member 3 Name]**
+* **Hammad Siddique**
+* **Hammad Sunasra**
 
 
 ---
@@ -89,6 +89,7 @@ This mini-project helps learners and educators by providing a **lightweight, mod
 
 ## 🙏 Thank You
  Built with passion for developers
+
 
 
 
